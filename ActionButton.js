@@ -50,7 +50,10 @@ const ActionButton = props =>
     } else {
       props.onReset && props.onReset();
 
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, {
+        toValue: 0,
+        useNativeDriver: true,
+      }).start();
       timeout.current = setTimeout(() =>
       {
         setActive(false);

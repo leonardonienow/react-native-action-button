@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  TouchableNativeFeedback,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from "react-native";
-import {
-  shadowStyle,
-  alignItemsMap,
-  getTouchableComponent,
-  isAndroid,
-  touchableBackground,
-  DEFAULT_ACTIVE_OPACITY
-} from "./shared";
+import
+  {
+    StyleSheet,
+    Text,
+    View,
+    Animated,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    Dimensions,
+  } from "react-native";
+import
+  {
+    shadowStyle,
+    alignItemsMap,
+    getTouchableComponent,
+    isAndroid,
+    touchableBackground,
+    DEFAULT_ACTIVE_OPACITY
+  } from "./shared";
 
 const { width: WIDTH } = Dimensions.get("window");
 const SHADOW_SPACE = 10;
@@ -26,8 +28,10 @@ const TextTouchable = isAndroid
   ? TouchableNativeFeedback
   : TouchableWithoutFeedback;
 
-export default class ActionButtonItem extends Component {
-  static get defaultProps() {
+export default class ActionButtonItem extends Component
+{
+  static get defaultProps()
+  {
     return {
       active: true,
       spaceBetween: 15,
@@ -39,7 +43,8 @@ export default class ActionButtonItem extends Component {
     };
   }
 
-  static get propTypes() {
+  static get propTypes()
+  {
     return {
       active: PropTypes.bool,
       useNativeFeedback: PropTypes.bool,
@@ -50,7 +55,8 @@ export default class ActionButtonItem extends Component {
     };
   }
 
-  render() {
+  render()
+  {
     const {
       size,
       position,
@@ -94,15 +100,15 @@ export default class ActionButtonItem extends Component {
     const parentStyle = isAndroid &&
       this.props.fixNativeFeedbackRadius
       ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
+        height: size,
+        marginBottom: spacing,
+        right: this.props.offsetX,
+        borderRadius: this.props.size / 2
+      }
       : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
+        paddingHorizontal: this.props.offsetX,
+        height: size + SHADOW_SPACE + spacing
+      };
     return (
       <Animated.View
         pointerEvents="box-none"
@@ -122,7 +128,7 @@ export default class ActionButtonItem extends Component {
           >
             <View style={[
               buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
+              !hideShadow ? { ...shadowStyle, ...this.props.shadowStyle } : null
             ]}>
               {this.props.children}
             </View>
@@ -133,7 +139,8 @@ export default class ActionButtonItem extends Component {
     );
   }
 
-  _renderTitle() {
+  _renderTitle()
+  {
     if (!this.props.title) return null;
 
     const {
@@ -169,15 +176,15 @@ export default class ActionButtonItem extends Component {
     const title = (
       React.isValidElement(this.props.title) ?
         this.props.title
-      : (
-        <Text
-          allowFontScaling={false}
-          style={[styles.text, this.props.textStyle]}
-          numberOfLines={numberOfLines}
-        >
-          {this.props.title}
-        </Text>
-      )
+        : (
+          <Text
+            allowFontScaling={false}
+            style={[styles.text, this.props.textStyle]}
+            numberOfLines={numberOfLines}
+          >
+            {this.props.title}
+          </Text>
+        )
     )
 
     return (
