@@ -1,6 +1,7 @@
 import React, { Component, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import {
+import
+{
   StyleSheet,
   Text,
   View,
@@ -8,7 +9,8 @@ import {
   TouchableOpacity
 } from "react-native";
 import ActionButtonItem from "./ActionButtonItem";
-import {
+import
+{
   shadowStyle,
   alignItemsMap,
   getTouchableComponent,
@@ -17,32 +19,40 @@ import {
   DEFAULT_ACTIVE_OPACITY
 } from "./shared";
 
-const ActionButton = props => {
+const ActionButton = props =>
+{
   const [, setResetToken] = useState(props.resetToken);
   const [active, setActive] = useState(props.active);
   const anim = useRef(new Animated.Value(props.active ? 1 : 0));
   const timeout = useRef(null);
   const mounted = useRef(false);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     mounted.current = true;
 
-    return () => {
+    return () =>
+    {
       mounted.current = false;
       timeout.current && clearTimeout(timeout.current);
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     if (props.active) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
       setActive(true);
       setResetToken(props.resetToken);
     } else {
       props.onReset && props.onReset();
 
       Animated.spring(anim.current, { toValue: 0 }).start();
-      timeout.current = setTimeout(() => {
+      timeout.current = setTimeout(() =>
+      {
         setActive(false);
         setResetToken(props.resetToken);
       }, 250);
@@ -53,18 +63,21 @@ const ActionButton = props => {
   // STYLESHEET GETTERS
   //////////////////////
 
-  const getOrientation = () => {
+  const getOrientation = () =>
+  {
     return { alignItems: alignItemsMap[props.position] };
   };
 
-  const getOffsetXY = () => {
+  const getOffsetXY = () =>
+  {
     return {
       // paddingHorizontal: props.offsetX,
       paddingVertical: props.offsetY
     };
   };
 
-  const getOverlayStyles = () => {
+  const getOverlayStyles = () =>
+  {
     return [
       styles.overlay,
       {
@@ -76,7 +89,8 @@ const ActionButton = props => {
     ];
   };
 
-  const _renderMainButton = () => {
+  const _renderMainButton = () =>
+  {
     const animatedViewStyle = {
       transform: [
         {
@@ -116,11 +130,11 @@ const ActionButton = props => {
     const parentStyle =
       isAndroid && props.fixNativeFeedbackRadius
         ? {
-            right: props.offsetX,
-            zIndex: props.zIndex,
-            borderRadius: props.size / 2,
-            width: props.size
-          }
+          right: props.offsetX,
+          zIndex: props.zIndex,
+          borderRadius: props.size / 2,
+          width: props.size
+        }
         : { marginHorizontal: props.offsetX, zIndex: props.zIndex };
 
     return (
@@ -141,7 +155,8 @@ const ActionButton = props => {
           )}
           activeOpacity={props.activeOpacity}
           onLongPress={props.onLongPress}
-          onPress={() => {
+          onPress={() =>
+          {
             props.onPress();
             if (props.children) animateButton();
           }}
@@ -158,7 +173,8 @@ const ActionButton = props => {
     );
   };
 
-  const _renderButtonIcon = () => {
+  const _renderButtonIcon = () =>
+  {
     const {
       icon,
       renderIcon,
@@ -194,7 +210,8 @@ const ActionButton = props => {
     );
   };
 
-  const _renderActions = () => {
+  const _renderActions = () =>
+  {
     const { children, verticalOrientation } = props;
 
     if (!active) return null;
@@ -224,7 +241,8 @@ const ActionButton = props => {
             {...ActionButton.props}
             parentSize={props.size}
             btnColor={props.btnOutRange}
-            onPress={() => {
+            onPress={() =>
+            {
               if (props.autoInactive) {
                 timeout.current = setTimeout(reset, 200);
               }
@@ -236,7 +254,8 @@ const ActionButton = props => {
     );
   };
 
-  const _renderTappableBackground = () => {
+  const _renderTappableBackground = () =>
+  {
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -250,7 +269,8 @@ const ActionButton = props => {
   // Animation Methods
   //////////////////////
 
-  const animateButton = (animate = true) => {
+  const animateButton = (animate = true) =>
+  {
     if (active) return reset(animate);
 
     if (animate) {
@@ -262,7 +282,8 @@ const ActionButton = props => {
     setActive(true);
   };
 
-  const reset = (animate = true) => {
+  const reset = (animate = true) =>
+  {
     if (props.onReset) props.onReset();
 
     if (animate) {
@@ -271,7 +292,8 @@ const ActionButton = props => {
       anim.current.setValue(0);
     }
 
-    timeout.current = setTimeout(() => {
+    timeout.current = setTimeout(() =>
+    {
       if (mounted.current) {
         setActive(false);
       }
@@ -372,9 +394,9 @@ ActionButton.defaultProps = {
   spacing: 20,
   outRangeScale: 1,
   autoInactive: true,
-  onPress: () => {},
-  onPressIn: () => {},
-  onPressOn: () => {},
+  onPress: () => { },
+  onPressIn: () => { },
+  onPressOn: () => { },
   backdrop: false,
   degrees: 45,
   position: "right",
